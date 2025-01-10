@@ -11,7 +11,13 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="My Todo List" component={TodoListScreen} />
+          <Stack.Screen
+            name="My Todo List"
+            component={TodoListScreen}
+            options={{
+              headerShown: false,
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

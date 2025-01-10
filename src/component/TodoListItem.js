@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { CheckBox, Divider } from '@rneui/themed';
 import { Ionicons } from '@expo/vector-icons';
+import OpaqueBackground from "./OpaqueBackground";
 
 const TodoListItem = (props) => {
     return (
@@ -25,14 +26,17 @@ const TodoListItem = (props) => {
                     uncheckedIcon={
                         <Ionicons
                             name="checkbox-outline"
-                            color="grey"
+                            color="lightgray"
                             size={20}
                         />
                     }
                 />
                 <View>
                     <Text style={styles.title}>{props.title}</Text>
-                    <Text style={styles.tag}>HEALTH</Text>
+                    <View>
+                        <OpaqueBackground color={"#7990F8"} />
+                        <Text style={styles.tag}>HEALTH</Text>
+                    </View>
                 </View>
             </View>
             <Divider
@@ -50,6 +54,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 15,
+        marginBottom: 5,
     },
     checkbox: {
         backgroundColor: 'transparent',
@@ -57,13 +62,12 @@ const styles = StyleSheet.create({
     },
     tag: {
         marginVertical: 5,
-        paddingHorizontal: 5,
+        paddingHorizontal: 2,
         paddingVertical: 2,
-        fontSize: 10,
-        backgroundColor: "powderblue",
-        color: "darkblue",
+        fontSize: 8,
+        fontWeight: "bold",
+        color: "#7990F8",
         textAlign: "center",
-        borderRadius: 5,
     },
     divider: {
         width: "95%",

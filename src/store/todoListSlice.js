@@ -6,7 +6,7 @@ const initialState = {
 var count = 0;
 
 const randomTodoList = () => {
-    return `TODO ${++count}`
+    return `Todo ${++count}`
 }
 
 export const todoListSlice = createSlice({
