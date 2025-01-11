@@ -6,7 +6,7 @@ import TodoListItem from "../component/TodoListItem";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import TodoTypeBoard from "../component/TodoTypeBoard";
 import todoType from "../store/todoType";
-import MainHeader from "../component/MainHeader";
+import PrimaryHeader from "../component/PrimaryHeader";
 
 const TodoListScreen = () => {
     const insets = useSafeAreaInsets();
@@ -25,7 +25,7 @@ const TodoListScreen = () => {
             }}
             edges={["right", "left"]}
         >
-            <MainHeader style={styles.header} />
+            <PrimaryHeader style={styles.header} />
             <TodoTypeBoard
                 key={"todoType+01"}
                 style={styles.board}
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     },
     addTaskButton: {
         alignSelf: "center",
-        borderRadius: 20,
+        borderRadius: 15,
         paddingHorizontal: 20,
         paddingVertical: 10,
         margin: 40,
