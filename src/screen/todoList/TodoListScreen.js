@@ -1,21 +1,21 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setTodoList } from "../store/todoListSlice";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import TodoListItem from "../component/TodoListItem";
+import TodoListItem from "./TodoListItem";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
-import TodoTypeBoard from "../component/TodoTypeBoard";
-import todoType from "../store/todoType";
-import PrimaryHeader from "../component/PrimaryHeader";
+import TodoTypeBoard from "./TodoTypeBoard";
+import todoType from "../../store/todoType";
+import PrimaryHeader from "../../component/PrimaryHeader";
+import { screenKeys } from "../screenKeys";
+import { getTodoDashboardData } from "../../utils";
 
-const TodoListScreen = () => {
+const TodoListScreen = ({ navigation, _ }) => {
     const insets = useSafeAreaInsets();
     const todos = useSelector((state) => state.todoList.value)
-    const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(setTodoList());
-    }, [])
+    const handleOnClickAddTaskBtn = () => {
+        navigation.push(`${screenKeys.ADD_TODO}`)
+    }
 
     return (
         <SafeAreaView
@@ -25,13 +25,18 @@ const TodoListScreen = () => {
             }}
             edges={["right", "left"]}
         >
-            <PrimaryHeader style={styles.header} />
+            <PrimaryHeader
+                key={"todoList+header"}
+                style={styles.header}
+            />
             <TodoTypeBoard
-                key={"todoType+01"}
+                key={"todoList+board"}
                 style={styles.board}
                 types={todoType}
+                data={getTodoDashboardData(todos)}
             />
             <FlatList
+                key={"todoList+tasks"}
                 keyExtractor={(item) => item}
                 data={todos}
                 showsVerticalScrollIndicator={false}
@@ -43,9 +48,8 @@ const TodoListScreen = () => {
                 }}
             />
             <TouchableOpacity
-                onPress={() => {
-                    dispatch(setTodoList());
-                }}
+                key={"todoList+floatingBtn"}
+                onPress={() => handleOnClickAddTaskBtn()}
                 style={styles.addTaskButton}
             >
                 <Text style={styles.plus}>+</Text>
@@ -74,7 +78,8 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         paddingHorizontal: 20,
         paddingVertical: 10,
-        margin: 40,
+        marginHorizontal: 30,
+        marginVertical: 40,
         position: "absolute",
         right: "auto",
         bottom: "auto",

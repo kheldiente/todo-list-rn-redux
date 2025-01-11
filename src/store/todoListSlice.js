@@ -2,26 +2,20 @@ import { createSlice } from "@reduxjs/toolkit";
 import sampleTasks from "../data/sampleTasks";
 
 const initialState = {
-    value: sampleTasks
-}
-
-const randomTodoList = () => {
-    return {
-        name: "New tasks added",
-        tagId: todoType.WORK.id,
-    }
+    // value: sampleTasks
+    value: []
 }
 
 export const todoListSlice = createSlice({
     name: "todoList",
     initialState,
     reducers: {
-        setTodoList: (state) => {
-            state.value = [...state.value, randomTodoList()]
+        addTodo: (state, action) => {
+            state.value = [...state.value, action.payload]
         }
     }
 })
 
-export const { setTodoList } = todoListSlice.actions;
+export const { addTodo } = todoListSlice.actions;
 
 export default todoListSlice.reducer;

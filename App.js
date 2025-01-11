@@ -1,8 +1,10 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import TodoListScreen from './src/screen/TodoListScreen';
+import TodoListScreen from './src/screen/todoList/TodoListScreen';
 import { store } from './src/store/store';
 import { Provider } from 'react-redux';
+import { screenKeys } from './src/screen/screenKeys';
+import AddTodoScreen from './src/screen/addTodo/AddTodoScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -12,8 +14,15 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
-            name="My Todo List"
+            name={screenKeys.MY_TODO_LIST}
             component={TodoListScreen}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name={screenKeys.ADD_TODO}
+            component={AddTodoScreen}
             options={{
               headerShown: false,
             }}

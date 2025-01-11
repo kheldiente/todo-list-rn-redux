@@ -1,19 +1,22 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
-import OpaqueBackground from "./OpaqueBackground";
+import OpaqueBackground from "../../component/OpaqueBackground";
 
 const TodoTypeBoard = (props) => {
+    console.log("data", JSON.stringify(props.data))
     return (
         <View
-            key={props.key}
             style={{
                 ...styles.container,
                 ...props.style
             }}
         >
-            {Object.entries(props.types).map(([_, value]) =>
-                <View style={styles.item}>
+            {Object.entries(props.types).map(([key, value]) =>
+                <View
+                    key={`${key}+type`}
+                    style={styles.item}
+                >
                     <OpaqueBackground color={value.color} />
                     <View
                         style={{
@@ -27,7 +30,11 @@ const TodoTypeBoard = (props) => {
                             size={20}
                         />
                         <View style={styles.content}>
-                            <Text style={{ fontWeight: "bold" }}>6 </Text>
+                            <Text style={{ fontWeight: "bold", marginRight: 5, }}>
+                                {props.data &&
+                                    props.data[value.id] ? props.data[value.id].length : 0
+                                }
+                            </Text>
                             <Text
                                 key={value.id}
                                 style={styles.title}

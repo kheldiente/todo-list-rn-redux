@@ -2,15 +2,19 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { CheckBox, Divider } from '@rneui/themed';
 import { Ionicons } from '@expo/vector-icons';
-import AppChip from "./AppChip";
-import { getTaskType } from "../utils";
+import AppChip from "../../component/AppChip";
+import { getTaskType } from "../../utils";
 
 const TodoListItem = (props) => {
     const data = props.data
-    const task = getTaskType(data.tagId)
+    const task = data.tagId && getTaskType(data.tagId)
+    const showDivider = props.showDivider && true
 
     return (
-        <View style={styles.container}>
+        <View
+            key={`${data.id}+${data.name}`}
+            style={styles.container}
+        >
             <View
                 style={{
                     flexDirection: "row",
@@ -45,10 +49,12 @@ const TodoListItem = (props) => {
                 <View>
                     <Text style={styles.title}>{data.name}</Text>
                     <View style={{ flexDirection: "row" }}>
-                        <AppChip
-                            title={task.name}
-                            color={task.color}
-                        />
+                        {data.tagId &&
+                            <AppChip
+                                title={task.name}
+                                color={task.color}
+                            />
+                        }
                         {data.time &&
                             <AppChip
                                 title={data.time}
@@ -60,10 +66,12 @@ const TodoListItem = (props) => {
                     </View>
                 </View>
             </View>
-            <Divider
-                color="darkgray"
-                style={styles.divider}
-            />
+            {showDivider ??
+                <Divider
+                    color="darkgray"
+                    style={styles.divider}
+                />
+            }
         </View>
     )
 }

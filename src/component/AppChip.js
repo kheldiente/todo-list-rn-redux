@@ -1,17 +1,19 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import OpaqueBackground from "./OpaqueBackground";
 import { Ionicons } from '@expo/vector-icons';
 
 const AppChip = (props) => {
-    console.log("appChip", JSON.stringify(props))
     return (
-        <View style={{
-            flexDirection: "row",
-            ...props.style
-        }}>
-            <View
+        <View
+            style={{
+                flexDirection: "row",
+                ...props.style
+            }}
+        >
+            <Pressable
                 style={{ alignItems: "center" }}
+                onPress={props.onPress}
             >
                 <OpaqueBackground
                     color={props.color ?? "#7990F8"}
@@ -35,7 +37,7 @@ const AppChip = (props) => {
                         {props.title.toUpperCase()}
                     </Text>
                 </View>
-            </View>
+            </Pressable>
         </View>
     )
 }
