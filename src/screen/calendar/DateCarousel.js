@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, FlatList, StyleSheet, Text, Pressable } from "react-native";
 import OpaqueBackground from "../../component/OpaqueBackground";
+import Animated, { FadeIn, FlipInXUp } from "react-native-reanimated";
 
 const DateCarouselItem = (props) => {
     return (
@@ -79,12 +80,16 @@ const DateCarousel = (props) => {
                 style={{ ...props.style }}
                 renderItem={({ item, index }) => {
                     return (
-                        <DateCarouselItem
-                            tag={index}
-                            selected={index == selectedIndex}
-                            date={item}
-                            onPress={handleOnClickItem}
-                        />
+                        <Animated.View
+                            entering={FlipInXUp.duration(100).delay(index * 100)}
+                        >
+                            <DateCarouselItem
+                                tag={index}
+                                selected={index == selectedIndex}
+                                date={item}
+                                onPress={handleOnClickItem}
+                            />
+                        </Animated.View>
                     )
                 }}
             />

@@ -7,14 +7,15 @@ import TodoTypeBoard from "./TodoTypeBoard";
 import todoType from "../../store/todoType";
 import PrimaryHeader from "../../component/PrimaryHeader";
 import { screenKeys } from "../screenKeys";
+import Animated, { FadeIn } from "react-native-reanimated";
 
 const TodoListScreen = ({ navigation, _ }) => {
     const insets = useSafeAreaInsets();
     const todoList = useSelector((state) => state.todoList.value)
 
     const handleOnClickAddTaskBtn = () => {
-        navigation.push(`${screenKeys.ADD_TODO}`)
-        // navigation.push(`${screenKeys.CALENDAR}`)
+        // navigation.push(`${screenKeys.ADD_TODO}`)
+        navigation.push(`${screenKeys.CALENDAR}`)
     }
 
     return (
@@ -43,9 +44,14 @@ const TodoListScreen = ({ navigation, _ }) => {
                 data={todoList.todos}
                 showsVerticalScrollIndicator={false}
                 style={{ marginTop: 15 }}
-                renderItem={({ item }) => {
+                renderItem={({ item, index }) => {
                     return (
-                        <TodoListItem data={item} />
+                        <Animated.View
+                            key={index}
+                            entering={FadeIn.duration(300).delay(index * 300)}
+                        >
+                            <TodoListItem data={item} />
+                        </Animated.View>
                     )
                 }}
             />
