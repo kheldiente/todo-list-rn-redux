@@ -3,8 +3,12 @@ import { StyleSheet, Text, View } from "react-native";
 import { CheckBox, Divider } from '@rneui/themed';
 import { Ionicons } from '@expo/vector-icons';
 import AppChip from "./AppChip";
+import { getTaskType } from "../utils";
 
 const TodoListItem = (props) => {
+    const data = props.data
+    const task = getTaskType(data.tagId)
+
     return (
         <View style={styles.container}>
             <View
@@ -20,7 +24,7 @@ const TodoListItem = (props) => {
                     }}
                 >
                     <CheckBox
-                        key={props.id ?? props.title}
+                        key={data.id}
                         containerStyle={styles.checkbox}
                         checkedIcon={
                             <Ionicons
@@ -39,8 +43,21 @@ const TodoListItem = (props) => {
                     />
                 </View>
                 <View>
-                    <Text style={styles.title}>{props.title}</Text>
-                    <AppChip title={"Health"} color={"#46CF8B"} />
+                    <Text style={styles.title}>{data.name}</Text>
+                    <View style={{ flexDirection: "row" }}>
+                        <AppChip
+                            title={task.name}
+                            color={task.color}
+                        />
+                        {data.time &&
+                            <AppChip
+                                title={data.time}
+                                icon={"time"}
+                                color={"#46CF8B"}
+                                style={{ marginLeft: 15 }}
+                            />
+                        }
+                    </View>
                 </View>
             </View>
             <Divider
@@ -57,7 +74,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 5,
     },
     title: {
-        fontSize: 14,
+        fontSize: 15,
         marginBottom: 4,
     },
     checkbox: {

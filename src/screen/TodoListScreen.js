@@ -34,10 +34,11 @@ const TodoListScreen = () => {
             <FlatList
                 keyExtractor={(item) => item}
                 data={todos}
+                showsVerticalScrollIndicator={false}
                 style={{ marginTop: 15 }}
                 renderItem={({ item }) => {
                     return (
-                        <TodoListItem title={item} />
+                        <TodoListItem data={item} />
                     )
                 }}
             />
@@ -65,7 +66,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
     },
     board: {
-        marginVertical: 10,
+        marginTop: 10,
         marginHorizontal: 10,
     },
     addTaskButton: {

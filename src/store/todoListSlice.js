@@ -1,12 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
+import sampleTasks from "../data/sampleTasks";
 
 const initialState = {
-    value: []
+    value: sampleTasks
 }
-var count = 0;
 
 const randomTodoList = () => {
-    return `Drink ${++count} glasses of water`
+    return {
+        name: "New tasks added",
+        tagId: todoType.WORK.id,
+    }
 }
 
 export const todoListSlice = createSlice({

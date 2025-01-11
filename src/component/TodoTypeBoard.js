@@ -18,7 +18,7 @@ const TodoTypeBoard = (props) => {
                     <View
                         style={{
                             paddingHorizontal: 10,
-                            paddingVertical: 15,
+                            paddingVertical: 12,
                         }}
                     >
                         <Ionicons

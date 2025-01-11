@@ -1,10 +1,15 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import OpaqueBackground from "./OpaqueBackground";
+import { Ionicons } from '@expo/vector-icons';
 
 const AppChip = (props) => {
+    console.log("appChip", JSON.stringify(props))
     return (
-        <View style={{ flexDirection: "row" }}>
+        <View style={{
+            flexDirection: "row",
+            ...props.style
+        }}>
             <View
                 style={{ alignItems: "center" }}
             >
@@ -12,12 +17,24 @@ const AppChip = (props) => {
                     color={props.color ?? "#7990F8"}
                     style={{ paddingHorizontal: 10, width: "120%" }}
                 />
-                <Text style={{
-                    ...styles.tag,
-                    color: props.color ?? "#7990F8"
-                }}>
-                    {props.title.toUpperCase()}
-                </Text>
+                <View
+                    style={{ flexDirection: "row", alignItems: "center" }}
+                >
+                    {props.icon &&
+                        <Ionicons
+                            name={props.icon}
+                            style={{ marginRight: 2 }}
+                            color="lightgray"
+                            size={12}
+                        />
+                    }
+                    <Text style={{
+                        ...styles.tag,
+                        color: props.color ?? "#7990F8"
+                    }}>
+                        {props.title.toUpperCase()}
+                    </Text>
+                </View>
             </View>
         </View>
     )
