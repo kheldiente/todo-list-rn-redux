@@ -7,11 +7,10 @@ import TodoTypeBoard from "./TodoTypeBoard";
 import todoType from "../../store/todoType";
 import PrimaryHeader from "../../component/PrimaryHeader";
 import { screenKeys } from "../screenKeys";
-import { getTodoDashboardData } from "../../utils";
 
 const TodoListScreen = ({ navigation, _ }) => {
     const insets = useSafeAreaInsets();
-    const todos = useSelector((state) => state.todoList.value)
+    const todoList = useSelector((state) => state.todoList.value)
 
     const handleOnClickAddTaskBtn = () => {
         navigation.push(`${screenKeys.ADD_TODO}`)
@@ -33,12 +32,12 @@ const TodoListScreen = ({ navigation, _ }) => {
                 key={"todoList+board"}
                 style={styles.board}
                 types={todoType}
-                data={getTodoDashboardData(todos)}
+                data={todoList.dashboard}
             />
             <FlatList
                 key={"todoList+tasks"}
                 keyExtractor={(item) => item}
-                data={todos}
+                data={todoList.todos}
                 showsVerticalScrollIndicator={false}
                 style={{ marginTop: 15 }}
                 renderItem={({ item }) => {

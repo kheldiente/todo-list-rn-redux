@@ -1,9 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import sampleTasks from "../data/sampleTasks";
+import { getTodoDashboardData } from "../utils";
 
 const initialState = {
-    // value: sampleTasks
-    value: []
+    value: {
+        todos: [...sampleTasks],
+        dashboard: {}
+    }
 }
 
 export const todoListSlice = createSlice({
@@ -11,8 +14,12 @@ export const todoListSlice = createSlice({
     initialState,
     reducers: {
         addTodo: (state, action) => {
-            state.value = [...state.value, action.payload]
-        }
+            const newList = [...state.value.todos, action.payload]
+            state.value = {
+                todos: newList,
+                dashboard: getTodoDashboardData(newList)
+            }
+        },
     }
 })
 
