@@ -26,6 +26,7 @@ const TagList = (props) => {
         >
             {Object.entries(todoType).map(([key, value]) =>
                 <AppChip
+                    key={`${key}+${value.id}`}
                     title={value.name}
                     color={tagId === value.id ? value.color : "lightgray"}
                     style={{ marginRight: 15 }}
