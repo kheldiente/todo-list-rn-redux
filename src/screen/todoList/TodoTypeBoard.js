@@ -4,7 +4,6 @@ import { Ionicons } from '@expo/vector-icons';
 import OpaqueBackground from "../../component/OpaqueBackground";
 
 const TodoTypeBoard = (props) => {
-    console.log("data", JSON.stringify(props.data))
     return (
         <View
             style={{

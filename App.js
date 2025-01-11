@@ -5,6 +5,7 @@ import { store } from './src/store/store';
 import { Provider } from 'react-redux';
 import { screenKeys } from './src/screen/screenKeys';
 import AddTodoScreen from './src/screen/addTodo/AddTodoScreen';
+import CalendarScreen from './src/screen/calendar/CalendarScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +24,13 @@ export default function App() {
           <Stack.Screen
             name={screenKeys.ADD_TODO}
             component={AddTodoScreen}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name={screenKeys.CALENDAR}
+            component={CalendarScreen}
             options={{
               headerShown: false,
             }}

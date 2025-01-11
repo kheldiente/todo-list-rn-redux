@@ -14,6 +14,7 @@ const TodoListScreen = ({ navigation, _ }) => {
 
     const handleOnClickAddTaskBtn = () => {
         navigation.push(`${screenKeys.ADD_TODO}`)
+        // navigation.push(`${screenKeys.CALENDAR}`)
     }
 
     return (
@@ -25,6 +26,8 @@ const TodoListScreen = ({ navigation, _ }) => {
             edges={["right", "left"]}
         >
             <PrimaryHeader
+                title={"Today"}
+                subtitle={"26 Dec"}
                 key={"todoList+header"}
                 style={styles.header}
             />
@@ -36,7 +39,7 @@ const TodoListScreen = ({ navigation, _ }) => {
             />
             <FlatList
                 key={"todoList+tasks"}
-                keyExtractor={(item) => item}
+                keyExtractor={(item, index) => `${item.name}+${index}`}
                 data={todoList.todos}
                 showsVerticalScrollIndicator={false}
                 style={{ marginTop: 15 }}

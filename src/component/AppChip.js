@@ -8,7 +8,7 @@ const AppChip = (props) => {
         <View
             style={{
                 flexDirection: "row",
-                ...props.style
+                ...props.style,
             }}
         >
             <Pressable
@@ -32,7 +32,8 @@ const AppChip = (props) => {
                     }
                     <Text style={{
                         ...styles.tag,
-                        color: props.color ?? "#7990F8"
+                        color: props.color ?? "#7990F8",
+                        fontSize: props.fontSize ?? styles.tag.fontSize
                     }}>
                         {props.title.toUpperCase()}
                     </Text>

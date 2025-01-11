@@ -2,10 +2,15 @@ import { createSlice } from "@reduxjs/toolkit";
 import sampleTasks from "../data/sampleTasks";
 import { getTodoDashboardData } from "../utils";
 
+// Mock data ONLY
 const initialState = {
     value: {
         todos: [...sampleTasks],
-        dashboard: {}
+        dashboard: {
+            [todoType.HEALTH.id]: [{}, {}],
+            [todoType.WORK.id]: [{}],
+            [todoType.MENTAL_HEALTH.id]: [{}],
+        }
     }
 }
 
