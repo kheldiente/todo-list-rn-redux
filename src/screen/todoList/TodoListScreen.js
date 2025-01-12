@@ -8,6 +8,7 @@ import todoType from "../../data/todoType";
 import PrimaryHeader from "../../component/PrimaryHeader";
 import { screenKeys } from "../screenKeys";
 import Animated, { FadeIn, FadeInLeft } from "react-native-reanimated";
+import config from "../../config/config";
 
 const TodoListScreen = ({ navigation, _ }) => {
     const insets = useSafeAreaInsets();
@@ -17,6 +18,8 @@ const TodoListScreen = ({ navigation, _ }) => {
         navigation.push(`${screenKeys.ADD_TODO}`)
         // navigation.push(`${screenKeys.CALENDAR}`)
     }
+
+    console.log("todoList", JSON.stringify(todoList))
 
     return (
         <SafeAreaView
@@ -54,7 +57,20 @@ const TodoListScreen = ({ navigation, _ }) => {
                             key={index}
                             entering={FadeIn.duration(300).delay(index * 200)}
                         >
-                            <TodoListItem data={item} />
+                            <TodoListItem
+                                data={item}
+                                showTime={config.showCalendar}
+                            >
+                                {item.subtasks.map((i) =>
+                                    <TodoListItem
+                                        key={i.id}
+                                        data={{ name: i.desc }}
+                                        defaultStyling={false}
+                                        showDivider={false}
+                                        style={{ marginTop: 10 }}
+                                    />
+                                )}
+                            </TodoListItem>
                         </Animated.View>
                     )
                 }}

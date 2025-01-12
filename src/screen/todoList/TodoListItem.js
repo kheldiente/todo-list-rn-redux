@@ -9,24 +9,24 @@ const TodoListItem = (props) => {
     const data = props.data
     const task = data.tagId && getTaskType(data.tagId)
     const showDivider = props.showDivider && true
+    const defaultStyling = props.defaultStyling ?? true
 
     return (
         <View
             key={`${data.id}+${data.name}`}
-            style={styles.container}
+            style={{
+                ...styles.container,
+                ...props.style,
+                // paddingHorizontal: defaultStyling ? styles.container : 0
+            }}
         >
             <View
                 style={{
                     flexDirection: "row",
-                    paddingVertical: 20,
+                    paddingVertical: defaultStyling ? 20 : 0,
                 }}
             >
-                <View
-                    style={{
-                        flexDirection: "column",
-                        alignItems: "flex-start",
-                    }}
-                >
+                <View>
                     <CheckBox
                         key={data.id}
                         containerStyle={styles.checkbox}
@@ -55,7 +55,7 @@ const TodoListItem = (props) => {
                                 color={task.color}
                             />
                         }
-                        {data.time &&
+                        {(data.time && props.showTime) &&
                             <AppChip
                                 title={data.time}
                                 icon={"time"}
@@ -64,6 +64,11 @@ const TodoListItem = (props) => {
                             />
                         }
                     </View>
+                    {props.children && props.children.length > 0 &&
+                        <View style={{ marginLeft: -25, marginTop: 10, }}>
+                            {props.children}
+                        </View>
+                    }
                 </View>
             </View>
             {showDivider ??
@@ -89,7 +94,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
         padding: 0,
         margin: 0,
-        alignSelf: "flex-start"
+        alignSelf: "flex-start",
     },
     divider: {
         width: "95%",

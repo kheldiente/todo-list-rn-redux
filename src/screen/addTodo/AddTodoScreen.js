@@ -19,6 +19,7 @@ import AddSubtaskItem from "./AddSubtaskItem";
 import { updateTodoInput, updateSubtask, updateSelectedTag, addSubtask } from "../../store/addTodoSlice";
 import Animated, { FadeInUp } from "react-native-reanimated";
 import SubtaskInput from "./SubtaskInput";
+import config from "../../config/config";
 
 const AddTodoScreen = ({ navigation, _ }) => {
     const insets = useSafeAreaInsets();
@@ -153,22 +154,24 @@ const AddTodoScreen = ({ navigation, _ }) => {
                         />
                     }
                     <View style={styles.btnContainer}>
-                        <Button
-                            buttonStyle={styles.addTimeBtn}
-                            disabled={data.input.length == 0}
-                            onPress={handleOnClickAddDateTime}
-                        >
-                            <Ionicons
-                                color={subtaskVisible ? "black" : "gray"}
-                                name="time"
-                                size={28}
+                        {config.showCalendar &&
+                            <Button
+                                buttonStyle={styles.addTimeBtn}
                                 disabled={data.input.length == 0}
-                            />
-                        </Button>
+                                onPress={handleOnClickAddDateTime}
+                            >
+                                <Ionicons
+                                    color={subtaskVisible ? "black" : "gray"}
+                                    name="time"
+                                    size={28}
+                                    disabled={data.input.length == 0}
+                                />
+                            </Button>
+                        }
                         <View style={{
                             flex: 1,
                             alignSelf: "center",
-                            marginLeft: 10,
+                            marginLeft: config.showCalendar ? 10 : 0,
                         }}>
                             <Button
                                 buttonStyle={styles.saveBtn}

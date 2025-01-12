@@ -16,7 +16,10 @@ export default sampleTasks = [
         name: "Write in a gratitude journal",
         tagId: todoType.MENTAL_HEALTH.id,
         time: "8:00 PM",
-        subtasks: []
+        subtasks: [
+            { id: 1, desc: "Get a  notebook" },
+            { id: 2, desc: "Follow the youtube tutorial" }
+        ]
     },
     {
         name: "Stretch everyday for 15 mins",
