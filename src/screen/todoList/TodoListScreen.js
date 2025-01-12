@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import TodoListItem from "./TodoListItem";
@@ -16,10 +16,7 @@ const TodoListScreen = ({ navigation, _ }) => {
 
     const handleOnClickAddTaskBtn = () => {
         navigation.push(`${screenKeys.ADD_TODO}`)
-        // navigation.push(`${screenKeys.CALENDAR}`)
     }
-
-    console.log("todoList", JSON.stringify(todoList))
 
     return (
         <SafeAreaView

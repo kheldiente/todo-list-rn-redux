@@ -31,7 +31,7 @@ export const addTodoSlice = createSlice({
                 selectedTag: action.payload
             }
         },
-        addSubtask: (state, action) => {
+        addSubtask: (state) => {
             var updated = state.value.subtasks
             updated.push({ id: 0, desc: "" })
 
@@ -39,6 +39,9 @@ export const addTodoSlice = createSlice({
                 ...state.value,
                 subtasks: updated
             }
+        },
+        clearCache: (state) => {
+            state.value = initialState.value
         }
     }
 })
@@ -47,7 +50,8 @@ export const {
     updateTodoInput,
     updateSubtask,
     updateSelectedTag,
-    addSubtask
+    addSubtask,
+    clearCache
 } = addTodoSlice.actions;
 
 export default addTodoSlice.reducer;

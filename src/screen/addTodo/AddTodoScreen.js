@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
     FlatList,
     KeyboardAvoidingView,
@@ -16,7 +16,7 @@ import { addTodo } from "../../store/todoListSlice";
 import { screenKeys } from "../screenKeys";
 import TagList from "./TagList";
 import AddSubtaskItem from "./AddSubtaskItem";
-import { updateTodoInput, updateSelectedTag, addSubtask, updateSubtask } from "../../store/addTodoSlice";
+import { updateTodoInput, updateSelectedTag, addSubtask, updateSubtask, clearCache } from "../../store/addTodoSlice";
 import Animated, { FadeInUp } from "react-native-reanimated";
 import SubtaskInput from "./SubtaskInput";
 import config from "../../config/config";
@@ -28,8 +28,6 @@ const AddTodoScreen = ({ navigation, _ }) => {
     const data = useSelector((state) => state.addTodoInput.value)
     const subtasks = useRef([{ id: 0, desc: "" }]);
     const [subtaskVisible, showSubtask] = useState(data.input.length > 0);
-
-    console.log("addTodo", JSON.stringify(data))
 
     const close = () => {
         navigation.goBack();
@@ -51,7 +49,7 @@ const AddTodoScreen = ({ navigation, _ }) => {
                 name: data.input,
                 tagId: data.selectedTag ? data.selectedTag.id : undefined,
                 subtasks: subtasks.current
-            })
+            }),
         );
         setTimeout(close, 300);
     }
@@ -79,7 +77,6 @@ const AddTodoScreen = ({ navigation, _ }) => {
             ...subtasks.current[index],
             desc: text
         }
-        console.log("handleOnUpdateSubtask", JSON.stringify(subtasks.current))
     }
 
     const handleOnClickMoreSubtask = () => {
@@ -87,6 +84,11 @@ const AddTodoScreen = ({ navigation, _ }) => {
             addSubtask()
         )
     }
+
+    useEffect(() => {
+        dispatch(clearCache())
+        showSubtask(false)
+    }, [])
 
     return (
         <SafeAreaView
