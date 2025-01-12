@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
     FlatList,
     KeyboardAvoidingView,
@@ -16,7 +16,7 @@ import { addTodo } from "../../store/todoListSlice";
 import { screenKeys } from "../screenKeys";
 import TagList from "./TagList";
 import AddSubtaskItem from "./AddSubtaskItem";
-import { updateTodoInput, updateSubtask, updateSelectedTag, addSubtask } from "../../store/addTodoSlice";
+import { updateTodoInput, updateSelectedTag, addSubtask, updateSubtask } from "../../store/addTodoSlice";
 import Animated, { FadeInUp } from "react-native-reanimated";
 import SubtaskInput from "./SubtaskInput";
 import config from "../../config/config";
@@ -26,6 +26,7 @@ const AddTodoScreen = ({ navigation, _ }) => {
     const dispatch = useDispatch();
 
     const data = useSelector((state) => state.addTodoInput.value)
+    const subtasks = useRef([{ id: 0, desc: "" }]);
     const [subtaskVisible, showSubtask] = useState(data.input.length > 0);
 
     console.log("addTodo", JSON.stringify(data))
@@ -49,7 +50,7 @@ const AddTodoScreen = ({ navigation, _ }) => {
             addTodo({
                 name: data.input,
                 tagId: data.selectedTag ? data.selectedTag.id : undefined,
-                subtasks: data.subtasks
+                subtasks: subtasks.current
             })
         );
         setTimeout(close, 300);
@@ -66,12 +67,19 @@ const AddTodoScreen = ({ navigation, _ }) => {
     }
 
     const handleOnUpdateSubtask = (index, text) => {
-        dispatch(
-            updateSubtask({
-                id: index,
-                desc: text
-            })
-        )
+        // Loses text input FOCUS when called
+        // dispatch(
+        //     updateSubtask({
+        //         id: index,
+        //         desc: text
+        //     })
+        // )
+
+        subtasks.current[index] = {
+            ...subtasks.current[index],
+            desc: text
+        }
+        console.log("handleOnUpdateSubtask", JSON.stringify(subtasks.current))
     }
 
     const handleOnClickMoreSubtask = () => {
@@ -134,6 +142,7 @@ const AddTodoScreen = ({ navigation, _ }) => {
                                                 data={{ id: index, desc: item.desc }}
                                                 showDivider={false}
                                                 onUpdateSubtask={handleOnUpdateSubtask}
+                                                focused={index === 0}
                                             />
                                         </Animated.View>
                                     )
