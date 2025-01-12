@@ -4,18 +4,18 @@ import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native
 import TodoListItem from "./TodoListItem";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import TodoTypeBoard from "./TodoTypeBoard";
-import todoType from "../../store/todoType";
+import todoType from "../../data/todoType";
 import PrimaryHeader from "../../component/PrimaryHeader";
 import { screenKeys } from "../screenKeys";
-import Animated, { FadeIn } from "react-native-reanimated";
+import Animated, { FadeIn, FadeInLeft } from "react-native-reanimated";
 
 const TodoListScreen = ({ navigation, _ }) => {
     const insets = useSafeAreaInsets();
     const todoList = useSelector((state) => state.todoList.value)
 
     const handleOnClickAddTaskBtn = () => {
-        // navigation.push(`${screenKeys.ADD_TODO}`)
-        navigation.push(`${screenKeys.CALENDAR}`)
+        navigation.push(`${screenKeys.ADD_TODO}`)
+        // navigation.push(`${screenKeys.CALENDAR}`)
     }
 
     return (
@@ -26,12 +26,16 @@ const TodoListScreen = ({ navigation, _ }) => {
             }}
             edges={["right", "left"]}
         >
-            <PrimaryHeader
-                title={"Today"}
-                subtitle={"26 Dec"}
-                key={"todoList+header"}
-                style={styles.header}
-            />
+            <Animated.View
+                entering={FadeInLeft.duration(400).delay(300)}
+            >
+                <PrimaryHeader
+                    title={"Today"}
+                    subtitle={"26 Dec"}
+                    key={"todoList+header"}
+                    style={styles.header}
+                />
+            </Animated.View>
             <TodoTypeBoard
                 key={"todoList+board"}
                 style={styles.board}
@@ -48,7 +52,7 @@ const TodoListScreen = ({ navigation, _ }) => {
                     return (
                         <Animated.View
                             key={index}
-                            entering={FadeIn.duration(300).delay(index * 300)}
+                            entering={FadeIn.duration(300).delay(index * 200)}
                         >
                             <TodoListItem data={item} />
                         </Animated.View>

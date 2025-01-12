@@ -1,56 +1,82 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import {
+    FlatList,
     KeyboardAvoidingView,
     Platform,
     StyleSheet,
     TextInput,
+    TouchableOpacity,
     View
 } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { Button } from "@rneui/themed"
-import TodoListItem from "../todoList/TodoListItem";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addTodo } from "../../store/todoListSlice";
 import { screenKeys } from "../screenKeys";
 import TagList from "./TagList";
+import AddSubtaskItem from "./AddSubtaskItem";
+import { updateTodoInput, updateSubtask, updateSelectedTag, addSubtask } from "../../store/addTodoSlice";
+import Animated, { FadeInUp } from "react-native-reanimated";
+import SubtaskInput from "./SubtaskInput";
 
 const AddTodoScreen = ({ navigation, _ }) => {
     const insets = useSafeAreaInsets();
     const dispatch = useDispatch();
 
-    const inputText = useRef("");
-    const [text, onChangeText] = useState("");
-    const [subtaskVisible, showSubtask] = useState(false);
-    const [selectedTag, setSelectedTag] = useState(null);
+    const data = useSelector((state) => state.addTodoInput.value)
+    const [subtaskVisible, showSubtask] = useState(data.input.length > 0);
+
+    console.log("addTodo", JSON.stringify(data))
 
     const close = () => {
         navigation.goBack();
     }
 
     const handleOnChangeInputText = (text) => {
-        inputText.current = text;
-
-        onChangeText(text);
+        dispatch(
+            updateTodoInput({
+                ...data,
+                input: text,
+            })
+        )
         showSubtask(text.length > 0);
     }
 
     const handleOnClickSave = () => {
         dispatch(
             addTodo({
-                name: inputText.current,
-                tagId: selectedTag ? selectedTag.id : undefined
+                name: data.input,
+                tagId: data.selectedTag ? data.selectedTag.id : undefined,
+                subtasks: data.subtasks
             })
         );
         setTimeout(close, 300);
     }
 
     const handleOnSelectTag = (tag) => {
-        setSelectedTag(tag)
+        dispatch(
+            updateSelectedTag(tag)
+        )
     }
 
     const handleOnClickAddDateTime = () => {
         navigation.push(`${screenKeys.CALENDAR}`)
+    }
+
+    const handleOnUpdateSubtask = (index, text) => {
+        dispatch(
+            updateSubtask({
+                id: index,
+                desc: text
+            })
+        )
+    }
+
+    const handleOnClickMoreSubtask = () => {
+        dispatch(
+            addSubtask()
+        )
     }
 
     return (
@@ -73,15 +99,18 @@ const AddTodoScreen = ({ navigation, _ }) => {
                         paddingHorizontal: 15,
                     }}
                 >
-                    <Ionicons
-                        style={styles.closeBtn}
-                        name="close"
-                        size={40}
+                    <TouchableOpacity
                         onPress={() => navigation.goBack()}
-                    />
+                    >
+                        <Ionicons
+                            style={styles.closeBtn}
+                            name="close"
+                            size={40}
+                        />
+                    </TouchableOpacity>
                     <TextInput
                         style={styles.taskInput}
-                        value={text}
+                        value={data.input}
                         multiline
                         numberOfLines={10}
                         placeholder={"Write a new task..."}
@@ -89,31 +118,51 @@ const AddTodoScreen = ({ navigation, _ }) => {
                         onChangeText={handleOnChangeInputText}
                     />
                     {subtaskVisible &&
-                        <TodoListItem
-                            data={{ name: "Add subtask" }}
-                            showDivider={false}
-                        />
+                        <View>
+                            <FlatList
+                                key={"addTodo+tasks"}
+                                keyExtractor={(item, index) => `${item.name}+${index}`}
+                                data={data.subtasks}
+                                showsVerticalScrollIndicator={false}
+                                renderItem={({ item, index }) => {
+                                    return (
+                                        <Animated.View
+                                            entering={FadeInUp.duration(100).delay(200)}
+                                        >
+                                            <SubtaskInput
+                                                data={{ id: index, desc: item.desc }}
+                                                showDivider={false}
+                                                onUpdateSubtask={handleOnUpdateSubtask}
+                                            />
+                                        </Animated.View>
+                                    )
+                                }}
+                            />
+                            <AddSubtaskItem
+                                onClickAddMoreSubtask={handleOnClickMoreSubtask}
+                            />
+                        </View>
                     }
                 </View>
                 <View style={{ flexDirection: "column" }}>
                     {subtaskVisible &&
                         <TagList
                             style={styles.tagList}
-                            selectedTag={selectedTag}
+                            selectedTag={data.selectedTag}
                             onSelectTag={handleOnSelectTag}
                         />
                     }
                     <View style={styles.btnContainer}>
                         <Button
                             buttonStyle={styles.addTimeBtn}
-                            disabled={text.length == 0}
+                            disabled={data.input.length == 0}
                             onPress={handleOnClickAddDateTime}
                         >
                             <Ionicons
                                 color={subtaskVisible ? "black" : "gray"}
                                 name="time"
                                 size={28}
-                                disabled={text.length == 0}
+                                disabled={data.input.length == 0}
                             />
                         </Button>
                         <View style={{
@@ -124,7 +173,7 @@ const AddTodoScreen = ({ navigation, _ }) => {
                             <Button
                                 buttonStyle={styles.saveBtn}
                                 title={"Save"}
-                                disabled={text.length == 0}
+                                disabled={data.input.length == 0}
                                 onPress={handleOnClickSave}
                             />
                         </View>

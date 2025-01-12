@@ -2,8 +2,10 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import OpaqueBackground from "../../component/OpaqueBackground";
+import Animated, { FadeInLeft, FadeInRight } from "react-native-reanimated";
 
 const TodoTypeBoard = (props) => {
+    var count = 0;
     return (
         <View
             style={{
@@ -12,9 +14,14 @@ const TodoTypeBoard = (props) => {
             }}
         >
             {Object.entries(props.types).map(([key, value]) =>
-                <View
+                <Animated.View
                     key={`${key}+type`}
                     style={styles.item}
+                    entering={
+                        ++count % 2 == 1
+                            ? FadeInLeft.duration(300).delay(200)
+                            : FadeInRight.duration(300).delay(200)
+                    }
                 >
                     <OpaqueBackground color={value.color} />
                     <View
@@ -42,7 +49,7 @@ const TodoTypeBoard = (props) => {
                             </Text>
                         </View>
                     </View>
-                </View>
+                </Animated.View>
             )}
         </View>
     )

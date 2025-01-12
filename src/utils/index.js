@@ -1,4 +1,4 @@
-import todoType from "../store/todoType"
+import todoType from "../data/todoType"
 
 export const getTaskType = (id) => {
     return Object.entries(todoType).find(([key, value]) => value.id === id)[1]
