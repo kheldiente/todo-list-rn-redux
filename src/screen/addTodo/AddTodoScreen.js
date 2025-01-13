@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import {
     FlatList,
     KeyboardAvoidingView,
@@ -16,7 +16,13 @@ import { addTodo } from "../../store/todoListSlice";
 import { screenKeys } from "../screenKeys";
 import TagList from "./TagList";
 import AddSubtaskItem from "./AddSubtaskItem";
-import { updateTodoInput, updateSelectedTag, addSubtask, updateSubtask, clearCache } from "../../store/addTodoSlice";
+import {
+    updateTodoInput,
+    updateSelectedTag,
+    addSubtask,
+    updateSubtask,
+    clearCache
+} from "../../store/addTodoSlice";
 import Animated, { FadeInUp } from "react-native-reanimated";
 import SubtaskInput from "./SubtaskInput";
 import config from "../../config/config";
@@ -31,11 +37,11 @@ const AddTodoScreen = ({ navigation, _ }) => {
     const [subtaskVisible, showSubtask] = useState(data.input.length > 0);
     const newTodoId = generateIdFromDate();
 
-    const close = () => {
+    const close = useCallback(() => {
         navigation.goBack();
-    }
+    })
 
-    const handleOnChangeInputText = (text) => {
+    const handleOnChangeInputText = useCallback((text) => {
         dispatch(
             updateTodoInput({
                 ...data,
@@ -44,9 +50,9 @@ const AddTodoScreen = ({ navigation, _ }) => {
             })
         )
         showSubtask(text.length > 0);
-    }
+    }, [data])
 
-    const handleOnClickSave = () => {
+    const handleOnClickSave = useCallback(() => {
         dispatch(
             addTodo({
                 id: newTodoId,
@@ -58,17 +64,17 @@ const AddTodoScreen = ({ navigation, _ }) => {
             }),
         );
         setTimeout(close, 300);
-    }
+    }, [data])
 
-    const handleOnSelectTag = (tag) => {
+    const handleOnSelectTag = useCallback((tag) => {
         dispatch(updateSelectedTag(tag))
-    }
+    }, [data])
 
-    const handleOnClickAddDateTime = () => {
+    const handleOnClickAddDateTime = useCallback(() => {
         navigation.push(`${screenKeys.CALENDAR}`)
-    }
+    }, [])
 
-    const handleOnUpdateSubtask = (index, text) => {
+    const handleOnUpdateSubtask = useCallback((index, text) => {
         // Loses text input FOCUS when called
         // dispatch(
         //     updateSubtask({
@@ -83,9 +89,9 @@ const AddTodoScreen = ({ navigation, _ }) => {
             id: `${newTodoId}+subtask${index}`,
             desc: text
         }
-    }
+    }, [data])
 
-    const handleOnToggleCheckbox = (index) => {
+    const handleOnToggleCheckbox = useCallback((index) => {
         const checked = subtasks.current[index].checked
             ? !subtasks.current[index].checked
             : false
@@ -96,11 +102,11 @@ const AddTodoScreen = ({ navigation, _ }) => {
             id: `${newTodoId}+subtask${index}`,
             checked: !checked
         }
-    }
+    }, [data])
 
-    const handleOnClickMoreSubtask = () => {
+    const handleOnClickMoreSubtask = useCallback(() => {
         dispatch(addSubtask())
-    }
+    }, [data])
 
     useEffect(() => {
         dispatch(clearCache())

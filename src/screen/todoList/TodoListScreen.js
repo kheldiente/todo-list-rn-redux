@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import TodoListItem from "./TodoListItem";
@@ -15,23 +15,23 @@ import SwipeableRowItem from "../../component/SwipeableRowItem";
 const TodoListScreen = ({ navigation, _ }) => {
     const insets = useSafeAreaInsets();
     const dispatch = useDispatch();
-    const todoList = useSelector((state) => state.todoList.value)
+    const { todos, dashboard } = useSelector((state) => state.todoList.value)
 
-    const handleOnClickAddTaskBtn = () => {
+    const handleOnClickAddTaskBtn = useCallback(() => {
         navigation.push(`${screenKeys.ADD_TODO}`)
-    }
-
-    const handleOnCheckboxChange = (id) => {
+    }, [])
+    
+    const handleOnCheckboxChange = useCallback((id) => {
         dispatch(toggleTodoCheckbox({ id: id }))
-    }
+    }, [todos])
 
-    const handleOnSubtaskCheckboxChange = (parentId, childId) => {
+    const handleOnSubtaskCheckboxChange = useCallback((parentId, childId) => {
         dispatch(toggleSubtaskTodoCheckbox({ parentId: parentId, childId: childId }))
-    }
+    }, [todos])
 
-    const handleOnClickItemAction = (id) => {
+    const handleOnClickItemAction = useCallback((id) => {
         dispatch(deleteTodo(id))
-    }
+    }, [todos])
 
     return (
         <SafeAreaView
@@ -55,12 +55,12 @@ const TodoListScreen = ({ navigation, _ }) => {
                 key={"todoList+board"}
                 style={styles.board}
                 types={todoType}
-                data={todoList.dashboard}
+                data={dashboard}
             />
             <FlatList
                 key={"todoList+tasks"}
                 keyExtractor={(item, index) => `${item.name}+${index}`}
-                data={todoList.todos}
+                data={todos}
                 showsVerticalScrollIndicator={false}
                 style={{ marginTop: 15 }}
                 renderItem={({ item, index }) => {
