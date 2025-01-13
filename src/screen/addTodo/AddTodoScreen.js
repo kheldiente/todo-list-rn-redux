@@ -55,9 +55,7 @@ const AddTodoScreen = ({ navigation, _ }) => {
     }
 
     const handleOnSelectTag = (tag) => {
-        dispatch(
-            updateSelectedTag(tag)
-        )
+        dispatch(updateSelectedTag(tag))
     }
 
     const handleOnClickAddDateTime = () => {
@@ -73,6 +71,7 @@ const AddTodoScreen = ({ navigation, _ }) => {
         //     })
         // )
 
+        // TODO: use addTodoSlice function INSTEAD
         subtasks.current[index] = {
             ...subtasks.current[index],
             desc: text

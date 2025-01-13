@@ -25,9 +25,41 @@ export const todoListSlice = createSlice({
                 dashboard: getTodoDashboardData(newList)
             }
         },
+        toggleTodoCheckbox: (state, action) => {
+            state.value = {
+                todos: state.value.todos.map((todo) =>
+                    todo.id == action.payload.id
+                        ? { ...todo, checked: !todo.checked }
+                        : todo
+                ),
+                dashboard: state.value.dashboard
+            }
+        },
+        toggleSubtaskTodoCheckbox: (state, action) => {
+            const newTodos = state.value.todos.map((todo) =>
+                todo.id == action.payload.parentId
+                    ? {
+                        ...todo,
+                        subtasks: todo.subtasks.map((subtask) =>
+                            subtask.id == action.payload.childId
+                                ? { ...subtask, checked: !subtask.checked }
+                                : subtask
+                        )
+                    }
+                    : todo
+            )
+            state.value = {
+                todos: newTodos,
+                dashboard: state.value.dashboard
+            }
+        }
     }
 })
 
-export const { addTodo } = todoListSlice.actions;
+export const {
+    addTodo,
+    toggleTodoCheckbox,
+    toggleSubtaskTodoCheckbox
+} = todoListSlice.actions;
 
 export default todoListSlice.reducer;

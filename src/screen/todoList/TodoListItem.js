@@ -30,10 +30,11 @@ const TodoListItem = (props) => {
                     <CheckBox
                         key={data.id}
                         containerStyle={styles.checkbox}
+                        checked={data.checked}
                         checkedIcon={
                             <Ionicons
                                 name="checkbox"
-                                color="darkviolet"
+                                color="lightgray"
                                 size={20}
                             />
                         }
@@ -44,22 +45,29 @@ const TodoListItem = (props) => {
                                 size={20}
                             />
                         }
+                        onPress={() => 
+                            props.onCheckboxChange && props.onCheckboxChange(data.id)
+                        }
                     />
                 </View>
                 <View>
-                    <Text style={styles.title}>{data.name}</Text>
+                    <Text
+                        style={data.checked ? selectedStateStyles.title : styles.title}
+                    >
+                        {data.name}
+                    </Text>
                     <View style={{ flexDirection: "row" }}>
                         {data.tagId &&
                             <AppChip
                                 title={task.name}
-                                color={task.color}
+                                color={data.checked ? "gray" : task.color}
                             />
                         }
                         {(data.time && props.showTime) &&
                             <AppChip
                                 title={data.time}
                                 icon={"time"}
-                                color={"#46CF8B"}
+                                color={data.checked ? "gray" : "#46CF8B"}
                                 style={{ marginLeft: 15 }}
                             />
                         }
@@ -87,6 +95,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 5,
     },
     title: {
+        color: "black",
         fontSize: 15,
         marginBottom: 4,
     },
@@ -99,6 +108,14 @@ const styles = StyleSheet.create({
     divider: {
         width: "95%",
         alignSelf: "center"
+    }
+})
+
+const selectedStateStyles = StyleSheet.create({
+    title: {
+        ...styles.title,
+        color: "gray",
+        textDecorationLine: "line-through"
     }
 })
 

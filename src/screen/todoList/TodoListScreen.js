@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import TodoListItem from "./TodoListItem";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
@@ -9,13 +9,23 @@ import PrimaryHeader from "../../component/PrimaryHeader";
 import { screenKeys } from "../screenKeys";
 import Animated, { FadeIn, FadeInLeft } from "react-native-reanimated";
 import config from "../../config/config";
+import { toggleSubtaskTodoCheckbox, toggleTodoCheckbox } from "../../store/todoListSlice";
 
 const TodoListScreen = ({ navigation, _ }) => {
     const insets = useSafeAreaInsets();
+    const dispatch = useDispatch();
     const todoList = useSelector((state) => state.todoList.value)
 
     const handleOnClickAddTaskBtn = () => {
         navigation.push(`${screenKeys.ADD_TODO}`)
+    }
+
+    const handleOnCheckboxChange = (id) => {
+        dispatch(toggleTodoCheckbox({ id: id }))
+    }
+
+    const handleOnSubtaskCheckboxChange = (parentId, childId) => {
+        dispatch(toggleSubtaskTodoCheckbox({ parentId: parentId, childId: childId }))
     }
 
     return (
@@ -58,14 +68,18 @@ const TodoListScreen = ({ navigation, _ }) => {
                                 key={`todo+${index}+parent`}
                                 data={item}
                                 showTime={config.showCalendar}
+                                onCheckboxChange={handleOnCheckboxChange}
                             >
                                 {item.subtasks.map((i) =>
                                     <TodoListItem
                                         key={`todo+${index}+${i.id}`}
-                                        data={{ name: i.desc }}
+                                        data={{ ...i, name: i.desc }}
                                         defaultStyling={false}
                                         showDivider={false}
                                         style={{ marginTop: 10 }}
+                                        onCheckboxChange={(id) =>
+                                            handleOnSubtaskCheckboxChange(item.id, id)
+                                        }
                                     />
                                 )}
                             </TodoListItem>
