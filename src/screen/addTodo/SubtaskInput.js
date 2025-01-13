@@ -17,6 +17,7 @@ const SubtaskInput = (props) => {
 
     const handleOnCheckboxChange = () => {
         setChecked(!checked)
+        props.onToggleCheckbox(props.data.id)
     }
 
     return (

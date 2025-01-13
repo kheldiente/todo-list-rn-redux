@@ -77,11 +77,24 @@ const AddTodoScreen = ({ navigation, _ }) => {
         //     })
         // )
 
-        // TODO: use addTodoSlice function INSTEAD
+        // TODO: use addTodoSlice (redux) functions INSTEAD
         subtasks.current[index] = {
             ...subtasks.current[index],
             id: `${newTodoId}+subtask${index}`,
             desc: text
+        }
+    }
+
+    const handleOnToggleCheckbox = (index) => {
+        const checked = subtasks.current[index].checked
+            ? !subtasks.current[index].checked
+            : false
+
+        // TODO: use addTodoSlice (redux) functions INSTEAD
+        subtasks.current[index] = {
+            ...subtasks.current[index],
+            id: `${newTodoId}+subtask${index}`,
+            checked: !checked
         }
     }
 
@@ -147,8 +160,9 @@ const AddTodoScreen = ({ navigation, _ }) => {
                                             <SubtaskInput
                                                 data={{ id: index, desc: item.desc }}
                                                 showDivider={false}
-                                                onUpdateSubtask={handleOnUpdateSubtask}
                                                 focused={index === 0}
+                                                onUpdateSubtask={handleOnUpdateSubtask}
+                                                onToggleCheckbox={handleOnToggleCheckbox}
                                             />
                                         </Animated.View>
                                     )
