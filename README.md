@@ -9,6 +9,9 @@ A demo starter app for studying [Redux toolkit](https://redux-toolkit.js.org/) ð
 - Delete todo item
 - Mark todo as completed and vice versa
 
+## Design
+- UI mockups are based from this free [Figma project](https://www.figma.com/design/7NbB3wSGp9b72YiUgllK1j/Todo-List-App-Clean-Modern-Free-(Community)?node-id=0-1&t=p9yKg70D7RwaBr0d-1)
+
 ## Screen recording
 
 <p float="left">
