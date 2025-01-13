@@ -8,10 +8,15 @@ const SubtaskInput = (props) => {
     const showInput = props.showInput ?? true
 
     const [text, onChangeText] = useState(data.desc);
+    const [checked, setChecked] = useState(false);
 
     const handleOnChangeInputText = (text) => {
         onChangeText(text)
         props.onUpdateSubtask(props.data.id, text)
+    }
+
+    const handleOnCheckboxChange = () => {
+        setChecked(!checked)
     }
 
     return (
@@ -35,10 +40,11 @@ const SubtaskInput = (props) => {
                         <CheckBox
                             key={data.id}
                             containerStyle={styles.checkbox}
+                            checked={checked}
                             checkedIcon={
                                 <Ionicons
                                     name="checkbox"
-                                    color="darkviolet"
+                                    color="gray"
                                     size={20}
                                 />
                             }
@@ -49,16 +55,16 @@ const SubtaskInput = (props) => {
                                     size={20}
                                 />
                             }
+                            onPress={handleOnCheckboxChange}
                         />
                     </View>
                     <View style={{ flex: 1 }}>
                         <TextInput
-                            style={styles.title}
+                            style={checked ? selectedStateStyles.title : styles.title}
                             placeholder={"Write a subtask..."}
                             placeholderTextColor={"lightgray"}
-                            cursorColor={"black"}
-                            selectionColor={"black"}
-                            color={"black"}
+                            selectionColor={checked ? "gray" : "black"}
+                            color={checked ? "gray" : "black"}
                             value={text}
                             onChangeText={handleOnChangeInputText}
                         />
@@ -88,6 +94,14 @@ const styles = StyleSheet.create({
         margin: 0,
         alignSelf: "flex-start"
     },
+})
+
+const selectedStateStyles = StyleSheet.create({
+    title: {
+        ...styles.title,
+        color: "gray",
+        textDecorationLine: "line-through"
+    }
 })
 
 export default SubtaskInput;

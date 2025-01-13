@@ -20,6 +20,7 @@ import { updateTodoInput, updateSelectedTag, addSubtask, updateSubtask, clearCac
 import Animated, { FadeInUp } from "react-native-reanimated";
 import SubtaskInput from "./SubtaskInput";
 import config from "../../config/config";
+import { generateIdFromDate } from "../../utils";
 
 const AddTodoScreen = ({ navigation, _ }) => {
     const insets = useSafeAreaInsets();
@@ -28,6 +29,7 @@ const AddTodoScreen = ({ navigation, _ }) => {
     const data = useSelector((state) => state.addTodoInput.value)
     const subtasks = useRef([{ id: 0, desc: "" }]);
     const [subtaskVisible, showSubtask] = useState(data.input.length > 0);
+    const newTodoId = generateIdFromDate();
 
     const close = () => {
         navigation.goBack();
@@ -37,6 +39,7 @@ const AddTodoScreen = ({ navigation, _ }) => {
         dispatch(
             updateTodoInput({
                 ...data,
+                id: newTodoId,
                 input: text,
             })
         )
@@ -46,9 +49,12 @@ const AddTodoScreen = ({ navigation, _ }) => {
     const handleOnClickSave = () => {
         dispatch(
             addTodo({
+                id: newTodoId,
                 name: data.input,
                 tagId: data.selectedTag ? data.selectedTag.id : undefined,
-                subtasks: subtasks.current
+                subtasks: subtasks.current.filter((s) =>
+                    s.desc.length > 0
+                )
             }),
         );
         setTimeout(close, 300);
@@ -74,14 +80,13 @@ const AddTodoScreen = ({ navigation, _ }) => {
         // TODO: use addTodoSlice function INSTEAD
         subtasks.current[index] = {
             ...subtasks.current[index],
+            id: `${newTodoId}+subtask${index}`,
             desc: text
         }
     }
 
     const handleOnClickMoreSubtask = () => {
-        dispatch(
-            addSubtask()
-        )
+        dispatch(addSubtask())
     }
 
     useEffect(() => {
@@ -124,7 +129,6 @@ const AddTodoScreen = ({ navigation, _ }) => {
                         multiline
                         numberOfLines={10}
                         placeholder={"Write a new task..."}
-                        cursorColor={"black"}
                         selectionColor={"black"}
                         onChangeText={handleOnChangeInputText}
                     />

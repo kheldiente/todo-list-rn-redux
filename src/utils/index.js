@@ -20,3 +20,11 @@ export const getTodoDashboardData = (todos) => {
         [todoType.OTHERS.id]: others,
     }
 }
+
+export const dateToUnixTimestamp = (date) => {
+    return Math.round(date.getTime() / 1000)
+}
+
+export const generateIdFromDate = () => {
+    return dateToUnixTimestamp(new Date())
+}
