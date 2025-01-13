@@ -9,7 +9,8 @@ import PrimaryHeader from "../../component/PrimaryHeader";
 import { screenKeys } from "../screenKeys";
 import Animated, { FadeIn, FadeInLeft } from "react-native-reanimated";
 import config from "../../config/config";
-import { toggleSubtaskTodoCheckbox, toggleTodoCheckbox } from "../../store/todoListSlice";
+import { deleteTodo, toggleSubtaskTodoCheckbox, toggleTodoCheckbox } from "../../store/todoListSlice";
+import SwipeableRowItem from "../../component/SwipeableRowItem";
 
 const TodoListScreen = ({ navigation, _ }) => {
     const insets = useSafeAreaInsets();
@@ -26,6 +27,10 @@ const TodoListScreen = ({ navigation, _ }) => {
 
     const handleOnSubtaskCheckboxChange = (parentId, childId) => {
         dispatch(toggleSubtaskTodoCheckbox({ parentId: parentId, childId: childId }))
+    }
+
+    const handleOnClickItemAction = (id) => {
+        dispatch(deleteTodo(id))
     }
 
     return (
@@ -64,25 +69,33 @@ const TodoListScreen = ({ navigation, _ }) => {
                             key={index}
                             entering={FadeIn.duration(300).delay(index * 200)}
                         >
-                            <TodoListItem
-                                key={`todo+${index}+parent`}
-                                data={item}
-                                showTime={config.showCalendar}
-                                onCheckboxChange={handleOnCheckboxChange}
+                            <SwipeableRowItem
+                                key={`todo+${index}+swipeable`}
+                                action={"Delete"}
+                                onClickItemAction={() => {
+                                    handleOnClickItemAction(item.id)
+                                }}
                             >
-                                {item.subtasks.map((i) =>
-                                    <TodoListItem
-                                        key={`todo+${index}+${i.id}`}
-                                        data={{ ...i, name: i.desc }}
-                                        defaultStyling={false}
-                                        showDivider={false}
-                                        style={{ marginTop: 10 }}
-                                        onCheckboxChange={(id) =>
-                                            handleOnSubtaskCheckboxChange(item.id, id)
-                                        }
-                                    />
-                                )}
-                            </TodoListItem>
+                                <TodoListItem
+                                    key={`todo+${index}+parent`}
+                                    data={item}
+                                    showTime={config.showCalendar}
+                                    onCheckboxChange={handleOnCheckboxChange}
+                                >
+                                    {item.subtasks.map((i) =>
+                                        <TodoListItem
+                                            key={`todo+${index}+${i.id}`}
+                                            data={{ ...i, name: i.desc }}
+                                            defaultStyling={false}
+                                            showDivider={false}
+                                            style={{ marginTop: 10 }}
+                                            onCheckboxChange={(id) =>
+                                                handleOnSubtaskCheckboxChange(item.id, id)
+                                            }
+                                        />
+                                    )}
+                                </TodoListItem>
+                            </SwipeableRowItem>
                         </Animated.View>
                     )
                 }}

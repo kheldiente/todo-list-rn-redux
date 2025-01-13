@@ -52,6 +52,15 @@ export const todoListSlice = createSlice({
                 todos: newTodos,
                 dashboard: state.value.dashboard
             }
+        },
+        deleteTodo: (state, action) => {
+            const updated = state.value.todos.filter((todo) =>
+                todo.id !== action.payload
+            )
+            state.value = {
+                todos: updated,
+                dashboard: getTodoDashboardData(updated)
+            }
         }
     }
 })
@@ -59,7 +68,8 @@ export const todoListSlice = createSlice({
 export const {
     addTodo,
     toggleTodoCheckbox,
-    toggleSubtaskTodoCheckbox
+    toggleSubtaskTodoCheckbox,
+    deleteTodo
 } = todoListSlice.actions;
 
 export default todoListSlice.reducer;
