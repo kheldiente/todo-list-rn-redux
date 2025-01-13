@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import TodoListScreen from './src/screen/todoList/TodoListScreen';
-import { store } from './src/store/store';
+import { store } from './src/app/store';
 import { Provider } from 'react-redux';
 import { screenKeys } from './src/screen/screenKeys';
 import AddTodoScreen from './src/screen/addTodo/AddTodoScreen';

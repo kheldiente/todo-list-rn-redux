@@ -12,7 +12,7 @@ import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context"
 import { Ionicons } from "@expo/vector-icons";
 import { Button } from "@rneui/themed"
 import { useDispatch, useSelector } from "react-redux";
-import { addTodo } from "../todoList/todoListSlice";
+import { addTodo } from "../../screen/todoList/todoListSlice";
 import { screenKeys } from "../screenKeys";
 import TagList from "./TagList";
 import AddSubtaskItem from "./AddSubtaskItem";
@@ -22,7 +22,7 @@ import {
     addSubtask,
     updateSubtask,
     clearCache
-} from "./addTodoSlice";
+} from "../../store/addTodoSlice";
 import Animated, { FadeInUp } from "react-native-reanimated";
 import SubtaskInput from "./SubtaskInput";
 import config from "../../config/config";

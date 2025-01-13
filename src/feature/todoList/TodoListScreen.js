@@ -9,7 +9,7 @@ import PrimaryHeader from "../../component/PrimaryHeader";
 import { screenKeys } from "../screenKeys";
 import Animated, { FadeIn, FadeInLeft } from "react-native-reanimated";
 import config from "../../config/config";
-import { deleteTodo, toggleSubtaskTodoCheckbox, toggleTodoCheckbox } from "./todoListSlice";
+import { deleteTodo, toggleSubtaskTodoCheckbox, toggleTodoCheckbox } from "../../screen/todoList/todoListSlice";
 import SwipeableRowItem from "../../component/SwipeableRowItem";
 import { dateToday } from "../../utils";
 

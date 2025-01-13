@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import sampleTasks from "../data/sampleTasks";
-import { getTodoDashboardData } from "../utils";
+import sampleTasks from "../../data/sampleTasks";
+import { getTodoDashboardData } from "../../utils";
 
 // Mock data ONLY
 const initialState = {
