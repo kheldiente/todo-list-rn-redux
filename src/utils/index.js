@@ -28,3 +28,8 @@ export const dateToUnixTimestamp = (date) => {
 export const generateIdFromDate = () => {
     return dateToUnixTimestamp(new Date())
 }
+
+export const dateToday = () => {
+    const [week, month, day, year] = new Date().toDateString().split(' ');
+    return `${day} ${month}`;
+}

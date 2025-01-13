@@ -11,6 +11,7 @@ import Animated, { FadeIn, FadeInLeft } from "react-native-reanimated";
 import config from "../../config/config";
 import { deleteTodo, toggleSubtaskTodoCheckbox, toggleTodoCheckbox } from "../../store/todoListSlice";
 import SwipeableRowItem from "../../component/SwipeableRowItem";
+import { dateToday } from "../../utils";
 
 const TodoListScreen = ({ navigation, _ }) => {
     const insets = useSafeAreaInsets();
@@ -46,7 +47,7 @@ const TodoListScreen = ({ navigation, _ }) => {
             >
                 <PrimaryHeader
                     title={"Today"}
-                    subtitle={"26 Dec"}
+                    subtitle={dateToday()}
                     key={"todoList+header"}
                     style={styles.header}
                 />

@@ -1,8 +1,9 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { Ionicons } from '@expo/vector-icons';
 import OpaqueBackground from "../../component/OpaqueBackground";
 import Animated, { FadeInLeft, FadeInRight } from "react-native-reanimated";
+import SvgIcon from "../../component/SvgIcon";
+import appIcons from "../../component/AppIcons";
 
 const TodoTypeBoard = (props) => {
     var count = 0;
@@ -30,10 +31,10 @@ const TodoTypeBoard = (props) => {
                             paddingVertical: 12,
                         }}
                     >
-                        <Ionicons
-                            name={value.icon}
-                            color={value.color}
-                            size={20}
+                        <SvgIcon
+                            width={20}
+                            height={20}
+                            name={appIcons[value.icon]}
                         />
                         <View style={styles.content}>
                             <Text style={{ fontWeight: "bold", marginRight: 5, }}>
@@ -72,7 +73,7 @@ const styles = StyleSheet.create({
     },
     content: {
         flexDirection: "row",
-        marginTop: 5,
+        marginTop: 8,
     }
 })
 
