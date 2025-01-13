@@ -126,6 +126,7 @@ const AddTodoScreen = ({ navigation, _ }) => {
                         numberOfLines={10}
                         placeholder={"Write a new task..."}
                         cursorColor={"black"}
+                        selectionColor={"black"}
                         onChangeText={handleOnChangeInputText}
                     />
                     {subtaskVisible &&
@@ -159,6 +160,7 @@ const AddTodoScreen = ({ navigation, _ }) => {
                 <View style={{ flexDirection: "column" }}>
                     {subtaskVisible &&
                         <TagList
+                            key={"addTodo+tagList"}
                             style={styles.tagList}
                             selectedTag={data.selectedTag}
                             onSelectTag={handleOnSelectTag}
@@ -182,7 +184,7 @@ const AddTodoScreen = ({ navigation, _ }) => {
                         <View style={{
                             flex: 1,
                             alignSelf: "center",
-                            marginLeft: config.showCalendar ? 10 : 0,
+                            marginHorizontal: config.showCalendar ? 10 : 15,
                         }}>
                             <Button
                                 buttonStyle={styles.saveBtn}
@@ -226,6 +228,7 @@ const styles = StyleSheet.create({
         marginBottom: 5,
     },
     tagList: {
+        marginHorizontal: 12,
         paddingHorizontal: 5,
         paddingVertical: 10,
         paddingBottom: 15,

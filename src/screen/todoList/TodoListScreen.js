@@ -55,12 +55,13 @@ const TodoListScreen = ({ navigation, _ }) => {
                             entering={FadeIn.duration(300).delay(index * 200)}
                         >
                             <TodoListItem
+                                key={`todo+${index}+parent`}
                                 data={item}
                                 showTime={config.showCalendar}
                             >
                                 {item.subtasks.map((i) =>
                                     <TodoListItem
-                                        key={i.id}
+                                        key={`todo+${index}+${i.id}`}
                                         data={{ name: i.desc }}
                                         defaultStyling={false}
                                         showDivider={false}

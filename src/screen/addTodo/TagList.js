@@ -17,10 +17,12 @@ const TagList = (props) => {
         >
             {Object.entries(todoType).map(([key, value]) =>
                 <Animated.View
+                    key={`anim+${key}_${value.id}`}
                     entering={FadeInLeft.duration(100).delay(++counter * 100)}
                 >
                     <AppChip
-                        key={`${key}+${value.id}`}
+                        key={`tagChip+${key}_${value.id}`}
+                        id={`${key}_${value.id}`}
                         title={value.name}
                         color={tagId === value.id ? value.color : "lightgray"}
                         fontSize={10}

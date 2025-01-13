@@ -12,6 +12,7 @@ const AppChip = (props) => {
             }}
         >
             <Pressable
+                key={`appChip+${props.id}`}
                 style={{ alignItems: "center" }}
                 onPress={props.onPress}
             >

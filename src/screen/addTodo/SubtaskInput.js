@@ -57,6 +57,7 @@ const SubtaskInput = (props) => {
                             placeholder={"Write a subtask..."}
                             placeholderTextColor={"lightgray"}
                             cursorColor={"black"}
+                            selectionColor={"black"}
                             color={"black"}
                             value={text}
                             onChangeText={handleOnChangeInputText}
