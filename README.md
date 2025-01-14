@@ -2,6 +2,10 @@
 
 A demo starter app for studying [Redux toolkit](https://redux-toolkit.js.org/) 🗒️
 
+<kbd>
+  <img src="screenshots-and-gifs/cover.jpg?raw=true" style="height:400px"> 
+</kbd>
+
 ## Features
 - Add todo item
 - Add subtask to todo item
@@ -10,12 +14,12 @@ A demo starter app for studying [Redux toolkit](https://redux-toolkit.js.org/) �
 - Mark todo as completed and vice versa
 
 ## Design
-- UI mockups are based from this free [Figma project](https://www.figma.com/design/7NbB3wSGp9b72YiUgllK1j/Todo-List-App-Clean-Modern-Free-(Community)?node-id=0-1&t=p9yKg70D7RwaBr0d-1)
+- UI mockups are based on this free [Figma project](https://www.figma.com/design/7NbB3wSGp9b72YiUgllK1j/Todo-List-App-Clean-Modern-Free-(Community)?node-id=0-1&t=p9yKg70D7RwaBr0d-1)
 
 ## Screen recording
 
 <p float="left">
-  <img src="https://github.com/kheldiente/todo-list-rn-redux/blob/main/screenshots-and-gifs/demo.gif" width="250" />
+  <img src="screenshots-and-gifs/demo.gif?raw=true" width="250" />
   &nbsp; &nbsp; &nbsp; &nbsp;
 </p>
 
@@ -37,4 +41,4 @@ npm start
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md]() file for details
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE) file for details
